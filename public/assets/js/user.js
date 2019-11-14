@@ -17,3 +17,26 @@ $("#userForm").on("submit", function() {
 	// 阻止默认提交行为
 	return false;
 });
+
+// 上传头像
+$("#modifyBox").on("change", "#avatar", function() {
+	// 使用formdata对象上传二进制文件
+	var fomeData = new FormData();
+	fomeData.append("avatar", this.files[0]);
+	$.ajax({
+		type: "post",
+		url: "/upload",
+		data: fomeData,
+		// 不解析请求参数
+		processData: false,
+		// 不设置请求参数类型
+		contentType: false,
+		success: function(response) {
+			// console.log(response);
+			// 头像预览
+			$("#preview").attr("src", response[0].avatar);
+			// 设置隐藏域值，上传图片路径
+			$("#hiddenAvatar").val(response[0].avatar);
+		}
+	});
+});
