@@ -53,3 +53,20 @@ $.ajax({
 		$("#userBox").html(html);
 	}
 });
+
+// 用户列表修改
+$("#userBox").on("click", ".edit", function() {
+	// 获取被点击用户的id
+	let id = $(this).attr("data-id");
+	$.ajax({
+		type: "get",
+		url: `/users/${id}`,
+		success: function(response) {
+			// console.log(response);
+			// 使用模板引擎拼接html
+			var html = template("modifyTpl", response);
+			// 渲染页面
+			$("#modifyBox").html(html);
+		}
+	});
+});
