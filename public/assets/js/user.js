@@ -40,3 +40,16 @@ $("#modifyBox").on("change", "#avatar", function() {
 		}
 	});
 });
+
+// 用户列表渲染
+$.ajax({
+	type: "get",
+	url: "/users",
+	success: function(response) {
+		// console.log(response);
+		// 使用模板引擎拼接
+		var html = template("userTpl", { data: response });
+		// 渲染页面
+		$("#userBox").html(html);
+	}
+});
