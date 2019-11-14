@@ -7,7 +7,7 @@ $("#userForm").on("submit", function() {
 		url: "/users",
 		data: userData,
 		success: function() {
-			// 刷新页面
+			// 添加成功,刷新页面
 			location.reload();
 		},
 		error: function() {
@@ -54,7 +54,7 @@ $.ajax({
 	}
 });
 
-// 用户列表修改
+// 用户列表修改渲染
 $("#userBox").on("click", ".edit", function() {
 	// 获取被点击用户的id
 	let id = $(this).attr("data-id");
@@ -69,4 +69,26 @@ $("#userBox").on("click", ".edit", function() {
 			$("#modifyBox").html(html);
 		}
 	});
+});
+
+// 修改用户功能
+$("#modifyBox").on("submit", "#modifyForm", function() {
+	// 获取表单修改后的信息
+	var modifyData = $(this).serialize();
+	// 获取需要修改的用户id
+	var id = $(this).attr("data-id");
+	$.ajax({
+		type: "put",
+		url: `/users/${id}`,
+		data: modifyData,
+		success: function() {
+			// 添加成功,刷新页面
+			location.reload();
+		},
+		error: function() {
+			alert("修改失败");
+		}
+	});
+	// 阻止默认行为
+	return false;
 });

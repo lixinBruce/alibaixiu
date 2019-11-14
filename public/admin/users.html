@@ -169,7 +169,7 @@
   </script>
   <!-- 用户修改模板 -->
   <script type="text/html" id="modifyTpl">
-    <form id="userForm">
+    <form id="modifyForm" data-id="{{_id}}">
       <h2>修改用户信息</h2>
       <div class="form-group">
         <label>头像</label>
@@ -183,7 +183,7 @@
             {{/if}}
             <i class="mask fa fa-upload"></i>
           </label>
-          <input type="hidden" name="avatar" id="hiddenAvatar">
+          <input type="hidden" name="avatar" id="hiddenAvatar" value="{{avatar}}">
         </div>
       </div>
       <div class="form-group">
