@@ -63,3 +63,19 @@ $("#formBox").on("submit", "#modifyCategory", function() {
 	// 阻止默认行为
 	return false;
 });
+
+// 文章删除修改功能
+$("#categoryBox").on("click", ".delete", function() {
+	if (confirm("您确定要删除该分类吗?")) {
+		// 获取需要删除的分类项id
+		let id = $(this).attr("data-id");
+		$.ajax({
+			type: "delete",
+			url: `/categories/${id}`,
+			success: function() {
+				// 删除成功,刷新页面
+				location.reload();
+			}
+		});
+	}
+});
