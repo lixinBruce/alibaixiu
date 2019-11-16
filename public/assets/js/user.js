@@ -103,6 +103,69 @@ $("#userBox").on("click", ".delete", function() {
 			type: "delete",
 			url: `/users/${id}`,
 			success: function() {
+				// 删除成功,刷新页面
+				location.reload();
+			}
+		});
+	}
+});
+
+// 获取批量删除按钮
+let deleteMany = $("#deleteMany");
+
+// 全选
+$("#selectAll").on("change", function() {
+	// 获取全选框的状态
+	var status = $(this).prop("checked");
+	// 设置复选框状态与全选框一致
+	$("#userBox")
+		.find("input")
+		.prop("checked", status);
+	// 显示批量删除按钮
+	if (status) {
+		deleteMany.show();
+	} else {
+		deleteMany.hide();
+	}
+});
+
+// 复选框
+$("#userBox").on("change", ".userStatus", function() {
+	// 获取所有复选框
+	var inputs = $("#userBox").find("input");
+	// 判断复选框总数量是否和复选框中选中的数量相同,如果相同就是全选,否则就是没有全选
+	if (inputs.length === inputs.filter(":checked").length) {
+		// 全选
+		$("#selectAll").prop("checked", true);
+	} else {
+		// 没有全选
+		$("#selectAll").prop("checked", false);
+	}
+	// 显示批量删除按钮
+	if (inputs.filter(":checked").length > 0) {
+		deleteMany.show();
+	} else {
+		deleteMany.hide();
+	}
+});
+
+// 批量删除功能
+deleteMany.on("click", function() {
+	var ids = [];
+	// 获取所有被选中复选框
+	var checkedUsers = $("#userBox")
+		.find("input")
+		.filter(":checked");
+	// 循环获取id
+	checkedUsers.each(function(index, element) {
+		ids.push($(element).attr("data-id"));
+	});
+	if (confirm("您是否确定要批量删除?")) {
+		$.ajax({
+			type: "delete",
+			url: `/users/${ids.join("-")}`,
+			success: function() {
+				// 批量删除成功,刷新页面
 				location.reload();
 			}
 		});
