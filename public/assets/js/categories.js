@@ -27,3 +27,39 @@ $.ajax({
 		$("#categoryBox").html(html);
 	}
 });
+
+// 文章分类修改渲染
+$("#categoryBox").on("click", ".edit", function() {
+	// 获取需要修改的id
+	let id = $(this).attr("data-id");
+	$.ajax({
+		type: "get",
+		url: `/categories/${id}`,
+		success: function(response) {
+			// console.log(response);
+			// 根据模板引擎拼接html
+			let html = template("modifyCategoryTpl", response);
+			// 渲染页面
+			$("#formBox").html(html);
+		}
+	});
+});
+
+// 文章分类修改功能
+$("#formBox").on("submit", "#modifyCategory", function() {
+	// 获取表单内容
+	let formData = $(this).serialize();
+	// 获取需要修改分类项的id
+	let id = $(this).attr("data-id");
+	$.ajax({
+		type: "put",
+		url: `/categories/${id}`,
+		data: formData,
+		success: function() {
+			// 修改成功,刷新页面
+			location.reload();
+		}
+	});
+	// 阻止默认行为
+	return false;
+});
