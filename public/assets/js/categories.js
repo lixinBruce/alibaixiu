@@ -14,3 +14,16 @@ $("#addCategory").on("submit", function() {
 	// 阻止默认行为
 	return false;
 });
+
+// 文章分类列表渲染
+$.ajax({
+	type: "get",
+	url: "/categories",
+	success: function(response) {
+		// console.log(response);
+		// 使用模板引擎拼接html
+		let html = template("categoryTpl", { data: response });
+		// 渲染页面
+		$("#categoryBox").html(html);
+	}
+});
