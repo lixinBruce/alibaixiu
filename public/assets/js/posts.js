@@ -41,3 +41,38 @@ function changePage(page) {
 		}
 	});
 }
+
+// 文章分类渲染
+$.ajax({
+	type: "get",
+	url: "/categories",
+	success: function(response) {
+		// 根据模板引擎拼接html
+		var html = template("categoryTpl", { data: response });
+		// 渲染页面
+		$("#categoryBox").html(html);
+	}
+});
+
+// 筛选文章列表功能
+$("#filterForm").on("submit", function() {
+	// 获取表单选择的数据
+	let formData = $(this).serialize();
+	// 文章列表渲染
+	$.ajax({
+		type: "get",
+		url: "/posts",
+		data: formData,
+		success: function(response) {
+			// console.log(response);
+			// 根据模板引擎拼接html
+			let html = template("postsTpl", response);
+			let pageHtml = template("pageTpl", response);
+			// 渲染页面
+			$("#postsBox").html(html);
+			$("#pageBox").html(pageHtml);
+		}
+	});
+	// 阻止默认行为
+	return false;
+});
