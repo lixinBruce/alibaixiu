@@ -13,9 +13,9 @@ $.ajax({
 // 文章封面上传功能
 $("#feature").on("change", function() {
 	// 获取选择的文件
-	var file = this.files[0];
+	let file = this.files[0];
 	// 创建formdata对象
-	var formData = new FormData();
+	let formData = new FormData();
 	// 传入文件
 	formData.append("cover", file);
 	$.ajax({
@@ -32,4 +32,24 @@ $("#feature").on("change", function() {
 			$("#thumbnail").val(response[0].cover);
 		}
 	});
+});
+
+// 文章添加功能
+$("#addForm").on("submit", function() {
+	// 获取表单输入信息
+	let formData = $(this).serialize();
+	$.ajax({
+		type: "post",
+		url: "/posts",
+		data: formData,
+		success: function() {
+			// 添加成功,跳转到文章列表页面
+			location.href = "/admin/posts.html";
+		},
+		error: function(response) {
+			console.log(response);
+		}
+	});
+	// 阻止默认行为
+	return false;
 });
