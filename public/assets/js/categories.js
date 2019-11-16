@@ -64,7 +64,7 @@ $("#formBox").on("submit", "#modifyCategory", function() {
 	return false;
 });
 
-// 文章删除修改功能
+// 文章分类删除修改功能
 $("#categoryBox").on("click", ".delete", function() {
 	if (confirm("您确定要删除该分类吗?")) {
 		// 获取需要删除的分类项id
@@ -77,5 +77,29 @@ $("#categoryBox").on("click", ".delete", function() {
 				location.reload();
 			}
 		});
+	}
+});
+
+// 全选
+$("#selectAll").on("change", function() {
+	// 获取全选框状态
+	let status = $(this).prop("checked");
+	// 复选框状态跟着全选变化
+	$("#categoryBox")
+		.find("input")
+		.prop("checked", status);
+});
+
+// 复选框
+$("#categoryBox").on("change", ".categoryStatus", function() {
+	// 获取所有复选框
+	let inputs = $("#categoryBox").find("input");
+	// 判断
+	if (inputs.length === inputs.filter(":checked").length) {
+		// 全选
+		$("#selectAll").prop("checked", true);
+	} else {
+		// 没有全选
+		$("#selectAll").prop("checked", false);
 	}
 });
