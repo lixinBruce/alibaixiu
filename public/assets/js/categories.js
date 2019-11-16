@@ -22,7 +22,7 @@ $.ajax({
 	success: function(response) {
 		// console.log(response);
 		// 使用模板引擎拼接html
-		let html = template("categoryTpl", { data: response });
+		let html = template("categoryListTpl", { data: response });
 		// 渲染页面
 		$("#categoryBox").html(html);
 	}
