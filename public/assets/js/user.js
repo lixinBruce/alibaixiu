@@ -92,3 +92,19 @@ $("#modifyBox").on("submit", "#modifyForm", function() {
 	// 阻止默认行为
 	return false;
 });
+
+// 删除用户功能
+$("#userBox").on("click", ".delete", function() {
+	// 确认是否删除
+	if (confirm("您确认要删除吗?")) {
+		// 获取被点击用户的id
+		var id = $(this).attr("data-id");
+		$.ajax({
+			type: "delete",
+			url: `/users/${id}`,
+			success: function() {
+				location.reload();
+			}
+		});
+	}
+});
