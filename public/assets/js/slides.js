@@ -47,14 +47,16 @@ $.ajax({
 
 // 轮播图列表删除功能
 $("#slideBox").on("click", ".delete", function() {
-	// 获取需要删除轮播图的id
-	let id = $(this).attr("data-id");
-	$.ajax({
-		type: "delete",
-		url: `/slides/${id}`,
-		success: function() {
-			// 删除成功,刷新页面
-			location.reload();
-		}
-	});
+	if (confirm("您确定要删除该轮播图吗?")) {
+		// 获取需要删除轮播图的id
+		let id = $(this).attr("data-id");
+		$.ajax({
+			type: "delete",
+			url: `/slides/${id}`,
+			success: function() {
+				// 删除成功,刷新页面
+				location.reload();
+			}
+		});
+	}
 });

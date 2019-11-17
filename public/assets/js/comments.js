@@ -53,14 +53,16 @@ $("#commentsBox").on("click", ".status", function() {
 
 // 删除评论功能
 $("#commentsBox").on("click", ".delete", function() {
-	// 获取需要修改的id
-	let id = $(this).attr("data-id");
-	$.ajax({
-		type: "delete",
-		url: `/comments/${id}`,
-		success: function() {
-			// 删除成功,刷新页面
-			location.reload();
-		}
-	});
+	if (confirm("您确定要删除评论吗?")) {
+		// 获取需要修改的id
+		let id = $(this).attr("data-id");
+		$.ajax({
+			type: "delete",
+			url: `/comments/${id}`,
+			success: function() {
+				// 删除成功,刷新页面
+				location.reload();
+			}
+		});
+	}
 });
