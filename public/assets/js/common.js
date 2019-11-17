@@ -25,3 +25,13 @@ function dateFormate(date) {
 		date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate()
 	);
 }
+
+// 登录用户信息渲染
+$.ajax({
+	type: "get",
+	url: `/users/${userId}`,
+	success: function(response) {
+		$(".avatar").attr("src", response.avatar);
+		$(".profile .name").html(response.nickName);
+	}
+});
