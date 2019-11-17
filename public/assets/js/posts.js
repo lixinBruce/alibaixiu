@@ -92,3 +92,36 @@ $("#postsBox").on("click", ".delete", function() {
 		});
 	}
 });
+
+// 评论功能
+var id, userId;
+$("#postsBox").on("click", ".postCom", function() {
+	// 获取文章id
+	id = $(this).data("id");
+	// console.log(id);
+	// 获取登录者id
+	userId = JSON.parse(localStorage.getItem("user"))._id;
+	// console.log(userId);
+	$("#exampleModal").modal("show");
+});
+
+// 点击发布评论
+$(".addCom").on("click", function() {
+	// 获取评论内容
+	var content = $("#message-text").val();
+	// console.log(content);
+	$.ajax({
+		type: "post",
+		url: "/comments",
+		data: {
+			author: userId,
+			content: content,
+			post: id
+		},
+		success: function(res) {
+			// console.log(res);
+			// 隐藏模态框
+			$("#exampleModal").modal("hide");
+		}
+	});
+});

@@ -53,6 +53,7 @@
           password
         },
         success: function (response) {
+          localStorage.setItem('user', JSON.stringify(response));
           // 登录成功跳转到管理页面
           location.href = 'index.html';
           // location.assign(index.html);
