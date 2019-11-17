@@ -53,3 +53,40 @@ $("#addForm").on("submit", function() {
 	// 阻止默认行为
 	return false;
 });
+
+// 获取地址栏参数函数封装
+function getUrlParams(name) {
+	// location.search 获取 ?id=...&age=....
+	let paramsArr = location.search.substr(1).split("&"); // ['id=...','age=....']
+	// 循环
+	for (let i = 0; i < paramsArr.length; i++) {
+		var tmp = paramsArr[i].split("="); // ['id','...']
+		// 判断
+		if (tmp[0] === name) {
+			return tmp[1];
+		}
+	}
+	return -1;
+}
+
+// 获取地址栏中id,如果有id就是修改文章操作
+let id = getUrlParams("id");
+if (id != -1) {
+	$.ajax({
+		type: "get",
+		url: `/posts/${id}`,
+		success: function(response) {
+			$.ajax({
+				type: "get",
+				url: "/categories",
+				success: function(categories) {
+					response.categories = categories;
+					console.log(response);
+					var html = template("modifyTpl", response);
+					console.log(html);
+					$("#parentBox").html(html);
+				}
+			});
+		}
+	});
+}
