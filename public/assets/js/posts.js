@@ -13,16 +13,6 @@ $.ajax({
 	}
 });
 
-// 修改时间格式
-function dateFormate(date) {
-	// 把date字符串格式转换成日期对象
-	date = new Date(date);
-	// 拼接字符串
-	return (
-		date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate()
-	);
-}
-
 // 分页功能
 function changePage(page) {
 	// 文章列表渲染
