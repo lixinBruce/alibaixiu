@@ -81,12 +81,29 @@ if (id != -1) {
 				url: "/categories",
 				success: function(categories) {
 					response.categories = categories;
-					console.log(response);
+					// console.log(response);
 					var html = template("modifyTpl", response);
-					console.log(html);
+					// console.log(html);
 					$("#parentBox").html(html);
 				}
 			});
 		}
 	});
 }
+
+// 修改文章功能
+$("#parentBox").on("submit", "#modifyForm", function() {
+	// 获取需要修改的文章id
+	let id = $(this).attr("data-id");
+	// 获取表单内容
+	let formData = $(this).serialize();
+	$.ajax({
+		type: "put",
+		url: `/posts/${id}`,
+		data: formData,
+		success: function() {
+			// 修改成功,跳转到文章列表页面
+			location.href = "/admin/posts.html";
+		}
+	});
+});
