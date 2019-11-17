@@ -76,3 +76,19 @@ $("#filterForm").on("submit", function() {
 	// 阻止默认行为
 	return false;
 });
+
+// 删除文章功能
+$("#postsBox").on("click", ".delete", function() {
+	if (confirm("您是否确定要删除该文章?")) {
+		// 获取需要删除文章的id
+		let id = $(this).attr("data-id");
+		$.ajax({
+			type: "delete",
+			url: `/posts/${id}`,
+			success: function() {
+				// 删除成功,刷新页面
+				location.reload();
+			}
+		});
+	}
+});
