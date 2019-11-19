@@ -47,27 +47,6 @@ $.ajax({
 	}
 });
 
-// 获取文章分类
-$.ajax({
-	type: "get",
-	url: "/categories",
-	success: function(response) {
-		// console.log(response);
-		let navTpl = `
-        {{each data}}
-            <li>
-                <a href="list.html?categoryId={{$value._id}}">
-                    <i class="fa {{$value.className}}"></i>{{$value.title}}
-                </a>
-            </li>
-        {{/each}}
-        `;
-		let html = template.render(navTpl, { data: response });
-		$("#navBox").html(html);
-		$("#topNavBox").html(html);
-	}
-});
-
 // 修改时间格式
 function dateFormate(date) {
 	// 把date字符串格式转换成日期对象

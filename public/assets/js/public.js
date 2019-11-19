@@ -8,6 +8,21 @@ function dateFormate(date) {
 	);
 }
 
+// 获取地址栏参数函数封装
+function getUrlParams(name) {
+	// location.search 获取 ?id=...&age=....
+	let paramsArr = location.search.substr(1).split("&"); // ['id=...','age=....']
+	// 循环
+	for (let i = 0; i < paramsArr.length; i++) {
+		var tmp = paramsArr[i].split("="); // ['id','...']
+		// 判断
+		if (tmp[0] === name) {
+			return tmp[1];
+		}
+	}
+	return -1;
+}
+
 // 获取随机推荐信息
 $.ajax({
 	type: "get",
@@ -58,4 +73,37 @@ $.ajax({
 		let html = template.render(commentTpl, { data: response });
 		$("#commentBox").html(html);
 	}
+});
+
+// 获取文章分类
+$.ajax({
+	type: "get",
+	url: "/categories",
+	success: function(response) {
+		// console.log(response);
+		let navTpl = `
+        {{each data}}
+            <li>
+                <a href="list.html?categoryId={{$value._id}}">
+                    <i class="fa {{$value.className}}"></i>{{$value.title}}
+                </a>
+            </li>
+        {{/each}}
+        `;
+		let html = template.render(navTpl, { data: response });
+		$("#navBox").html(html);
+		$("#topNavBox").html(html);
+	}
+});
+
+// 点击搜索按钮
+$(".search form").on("submit", function() {
+	// 获取用户输入内容
+	let keys = $(this)
+		.find(".keys")
+		.val();
+	// 跳转到搜索页面
+	location.href = `/search.html?key=${keys}`;
+	// 阻止默认行为
+	return false;
 });
